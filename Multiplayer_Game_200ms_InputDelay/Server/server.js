@@ -56,7 +56,8 @@ class Player {
 io.on("connection", (socket) => {
   console.log("a user connected");
 
-  socket.on("connectedToGame", (position) => {
+  socket.on("connectedToGame", () => {
+    const position = { x: Math.floor(Math.random() * 981), y: Math.floor(Math.random() * 881) };
     players.push(new Player(socket.id, position.x, position.y));
     socket.emit("setBeginningGameState", players);
   });
@@ -93,9 +94,9 @@ io.on("connection", (socket) => {
 
   socket.on("highPing", (id) => {
     io.sockets.sockets.forEach((socket) => {
-        if (socket.id === id) socket.disconnect(true);
+      if (socket.id === id) socket.disconnect(true);
     });
-  })
+  });
 
   socket.on("disconnect", () => {
     clearTimeout(LatencyTimeout);

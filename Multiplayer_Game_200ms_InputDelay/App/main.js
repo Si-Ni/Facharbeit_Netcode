@@ -2,7 +2,7 @@ const socket = io("http://192.168.178.104:3000/", {
   transports: ["websocket"],
 });
 
-socket.emit("connectedToGame", { x: Math.floor(Math.random() * 981), y: Math.floor(Math.random() * 881) });
+socket.emit("connectedToGame");
 
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
@@ -131,8 +131,8 @@ setInterval(function () {
 
 socket.on("pong", function () {
   latency = Date.now() - startTime; //latency + die des Remote-Spielers könnte als Input-Delay verwendet werden
-  if(latency >= 400){
-    socket.emit("highPing", (localSocketId));
+  if (latency >= 400) {
+    socket.emit("highPing", localSocketId);
   }
-  document.getElementById("ping").innerText = "Ping: " + latency
+  document.getElementById("ping").innerText = "Ping: " + latency;
 });
